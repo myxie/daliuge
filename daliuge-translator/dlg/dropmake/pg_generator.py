@@ -198,9 +198,10 @@ class LGNode:
         """
         if (
             lg_node.is_group()
-            and not (lg_node.is_scatter())
-            and not (lg_node.is_loop())
-            and not (lg_node.is_groupby())
+            and not lg_node.is_scatter()
+            and not lg_node.is_loop()
+            and not lg_node.is_groupby()
+            and not lg_node.is_exclusive_force_node()
         ):
             raise GInvalidNode(
                 "Only Scatters or Loops can be nested, but {0} is neither".format(
@@ -356,6 +357,9 @@ class LGNode:
 
     def is_groupby(self):
         return self._jd["category"] == "GroupBy"
+
+    def is_exclusive_force_node(self):
+        return self._jd["category"] == "ExclusiveForceNode"
 
     def is_mpi(self):
         return self._jd["category"] == "mpi"
@@ -523,6 +527,8 @@ class LGNode:
                     self._dop = self.group_by_scatter_layers[0]
                 elif self.is_loop():
                     self._dop = int(self.jd.get("num_of_iter", 1))
+                elif self.is_exclusive_force_node():
+                    self._dop = 1
                 else:
                     raise GInvalidNode(
                         "Unrecognised (Group) Logical Graph Node: '{0}'".format(
@@ -815,6 +821,10 @@ class LGNode:
             )
         elif drop_type == "Loop":
             pass
+        elif drop_type == "ExclusiveForceNode":
+            drop_spec = dropdict(
+                {"oid": oid, "type": "ExclusiveForceNode", "storage": "null", "rank": rank}
+            )
         else:
             raise GraphException("Unknown DROP type: '{0}'".format(drop_type))
         return drop_spec
@@ -2297,7 +2307,7 @@ class LG:
         1. just create pgn anyway
         2. sort out the links
         """
-        # each pg node needs to be taggged with iid
+        # each pg node needs to be tagged with iid
         # based purely on its h-level
         for lgn in self._start_list:
             self.lgn_to_pgn(lgn)
@@ -2636,6 +2646,7 @@ ALGO_METIS = 1
 ALGO_MY_SARKAR = 2
 ALGO_MIN_NUM_PARTS = 3
 ALGO_PSO = 4
+ALGO_SIMPLE = 5
 
 _known_algos = {
     "none": ALGO_NONE,
@@ -2643,11 +2654,13 @@ _known_algos = {
     "mysarkar": ALGO_MY_SARKAR,
     "min_num_parts": ALGO_MIN_NUM_PARTS,
     "pso": ALGO_PSO,
+    "simple": ALGO_SIMPLE,
     ALGO_NONE: "none",
     ALGO_METIS: "metis",
     ALGO_MY_SARKAR: "mysarkar",
     ALGO_MIN_NUM_PARTS: "min_num_parts",
     ALGO_PSO: "pso",
+    ALGO_SIMPLE: "simple"
 }
 
 
