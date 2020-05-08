@@ -46,6 +46,7 @@ from bottle import (
 import bottle
 import pkg_resources
 
+from .. import simple_translator
 from ... import common, restutils
 from ...clients import CompositeManagerClient
 from ..pg_generator import unroll, partition, GraphException
@@ -407,21 +408,37 @@ def gen_pgt_post():
     json_string = reqform.get("json_data")
     try:
         logical_graph = json.loads(json_string)
-        # LG -> PGT
-        pgt = unroll_and_partition_with_params(logical_graph, reqform)
-        par_algo = reqform.get("algo", "none")
-        pgt_id = pg_mgr.add_pgt(pgt, lg_name)
 
-        part_info = " - ".join(
-            ["{0}:{1}".format(k, v) for k, v in pgt.result().items()]
-        )
-        tpl = file_as_string("pg_viewer.html")
-        return template(
-            tpl,
-            pgt_view_json_name=pgt_id,
-            partition_info=part_info,
-            title="Physical Graph Template {}".format("" if par_algo == "none" else "Partitioning"),
-        )
+        # Are we using the simple translation system
+        algorithm = reqform.get("algo", "none")
+        if algorithm == "simple":
+            pgt = simple_translator.logical_graph_to_physical_graph_template(
+                logical_graph
+            )
+            pgt_id = pg_mgr.add_pgt(pgt, lg_name)
+
+            tpl = file_as_string("pg_viewer.html")
+            return template(
+                tpl, pgt_view_json_name=pgt_id, title="Physical Graph Template Simple",
+            )
+        else:
+            # LG -> PGT
+            pgt = unroll_and_partition_with_params(logical_graph, reqform)
+            par_algo = reqform.get("algo", "none")
+            pgt_id = pg_mgr.add_pgt(pgt, lg_name)
+
+            part_info = " - ".join(
+                ["{0}:{1}".format(k, v) for k, v in pgt.result().items()]
+            )
+            tpl = file_as_string("pg_viewer.html")
+            return template(
+                tpl,
+                pgt_view_json_name=pgt_id,
+                partition_info=part_info,
+                title="Physical Graph Template {}".format(
+                    "" if par_algo == "none" else "Partitioning"
+                ),
+            )
     except GraphException as ge:
         trace_msg = traceback.format_exc()
         print(trace_msg)
@@ -435,7 +452,28 @@ def gen_pgt_post():
         # return "Graph partition exception {1}: {0}".format(trace_msg, lg_name)
 
 
+def check_nodes_and_algorithms(logical_graph, algorithm_parameters):
+    algorithm_id = algorithm_parameters.get("algo", "none")
+
+    has_exclusive_force_node = False
+    for node in logical_graph["nodeDataArray"]:
+        if "category" in node and node["category"] == "ExclusiveForceNode":
+            has_exclusive_force_node = True
+            break
+
+    if has_exclusive_force_node:
+        if algorithm_id in ["none", "metis", "mysarkar", "min_num_parts", "pso"]:
+            raise GraphException(
+                "The ExclusiveForceNode is not available when using {}".format(
+                    algorithm_id
+                )
+            )
+
+
 def unroll_and_partition_with_params(lg_path, algo_params_source):
+    # Check nodes and graphs
+    check_nodes_and_algorithms(lg_path, algo_params_source)
+
     # Unrolling LG to PGT.
     pgt = unroll(lg_path)
 
@@ -491,7 +529,9 @@ def root():
 
 
 def run(parser, args):
-    warnings.warn("Running the translator from daliuge is deprecated", DeprecationWarning)
+    warnings.warn(
+        "Running the translator from daliuge is deprecated", DeprecationWarning
+    )
     epilog = """
 If you have no Logical Graphs yet and want to see some you can grab a copy
 of those maintained at:
@@ -584,6 +624,7 @@ https://github.com/ICRAR/daliuge-logical-graphs
     # Simple and easy
     def handler(*_args):
         raise KeyboardInterrupt
+
     signal.signal(signal.SIGTERM, handler)
     signal.signal(signal.SIGINT, handler)
 

@@ -565,7 +565,9 @@ class LGNode:
                     if len(k_v) > 1:
                         # Do substitutions for MKN
                         if "mkn" in self.jd:
-                            kwargs[k_v[0]] = self._mkn_substitution(self.jd["mkn"], k_v[1])
+                            kwargs[k_v[0]] = self._mkn_substitution(
+                                self.jd["mkn"], k_v[1]
+                            )
                         else:
                             kwargs[k_v[0]] = k_v[1]
 
@@ -823,7 +825,12 @@ class LGNode:
             pass
         elif drop_type == "ExclusiveForceNode":
             drop_spec = dropdict(
-                {"oid": oid, "type": "ExclusiveForceNode", "storage": "null", "rank": rank}
+                {
+                    "oid": oid,
+                    "type": "ExclusiveForceNode",
+                    "storage": "null",
+                    "rank": rank,
+                }
             )
         else:
             raise GraphException("Unknown DROP type: '{0}'".format(drop_type))
@@ -1715,9 +1722,12 @@ class MySarkarPGTP(PGT):
         # print("gojs_json called within MyKarkarPGTP from {0}".format(inspect.stack()[1][3]))
 
         if self._num_parts_done == 0 and self._partitions is None:
-            self._num_parts_done, _, self._ptime, self._partitions = (
-                self._scheduler.partition_dag()
-            )
+            (
+                self._num_parts_done,
+                _,
+                self._ptime,
+                self._partitions,
+            ) = self._scheduler.partition_dag()
             # print("%s: _num_parts_done = %d" % (self.__class__.__name__, self._num_parts_done))
             # print("len(self._partitions) = %d" % (len(self._partitions)))
             # for part in self._partitions:
@@ -2660,7 +2670,7 @@ _known_algos = {
     ALGO_MY_SARKAR: "mysarkar",
     ALGO_MIN_NUM_PARTS: "min_num_parts",
     ALGO_PSO: "pso",
-    ALGO_SIMPLE: "simple"
+    ALGO_SIMPLE: "simple",
 }
 
 
