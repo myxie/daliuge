@@ -86,6 +86,23 @@ function fillOutSettings(){
       });
   }
 
+  function showAbout() {
+    console.log("showabout")
+    $("#aboutModal").modal('show');
+  }
+
+  function submitIssue(){
+    console.log("submitIssue")
+  }
+
+  function openDocs() {
+     // open in new tab:
+     window.open(
+      'https://daliuge.readthedocs.io/en/latest/graphs.html',
+      '_blank'
+    );
+  }
+
   function makePNG() {
   
     html2canvas(document.querySelector("#main")).then(canvas => {

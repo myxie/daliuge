@@ -34,6 +34,15 @@
   box-shadow: none !important;
 }
 
+#navbarDropdownHelp{
+  color:white;
+}
+
+#aboutModal img {
+  height:30px;
+  width: 30px;
+}
+
 .tooltip {
     position: relative;
     display: inline-block;
