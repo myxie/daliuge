@@ -580,6 +580,19 @@ function startGraphStatusUpdates(serverUrl, sessionId, selectedNode, delay,
 	var stateUpdateTimer = d3.timer(updateStates);
 }
 
+
+function showAbout() {
+    $("#aboutModal").modal('show');
+}
+
+function openDocs() {
+	// open in new tab:
+	window.open(
+		'https://daliuge.readthedocs.io/en/latest/managers.html',
+		'_blank'
+	);
+}
+
 /**
  * Determine, based on the numerical status, if the associated session can be cancelled.
  *

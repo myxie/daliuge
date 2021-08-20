@@ -173,6 +173,41 @@ svg {
   color:lime;
 }
 
+#navbarDropdownHelp{
+  color:white;
+}
+
+.dropdown-menu-right{
+  right: 0;
+  left: auto !important;
+}
+
+.dropdown-menu{
+  border:solid 1px #000c1a;
+  border-radius: 6px;
+   position: absolute;
+   z-index: 1;
+   background-color: #0059a5;
+}
+
+.dropdown-item{
+  color: white;
+}
+
+.dropdown-item:hover{
+  background-color: #001d3b;
+  color: white;
+}
+
+#aboutModal img {
+  height:30px;
+  width: 30px;
+}
+
+#navbarDropdownHelp{
+  color:white;
+}
+
 .tooltip {
   position: relative;
   display: inline-block;

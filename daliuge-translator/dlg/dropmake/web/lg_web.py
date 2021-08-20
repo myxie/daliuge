@@ -366,9 +366,9 @@ def gen_pgt():
 
         pgt_id = pg_mgr.add_pgt(pgt, lg_name)
 
-        Version = file_as_string("VERSION").splitlines()
-        daliugeVersion = Version[0]
-        commitHash = Version[1]
+        gitDaliugeVersion = file_as_string("VERSION").splitlines()
+        daliugeVersion = gitDaliugeVersion[0]
+        commitHash = gitDaliugeVersion[1]
         license = file_as_string("LICENSE")
 
         part_info = " - ".join(
@@ -419,9 +419,9 @@ def gen_pgt_post():
         par_algo = reqform.get("algo", "none")
         pgt_id = pg_mgr.add_pgt(pgt, lg_name)
 
-        Version = file_as_string("VERSION").splitlines()
-        daliugeVersion = Version[0]
-        commitHash = Version[1]
+        gitDaliugeVersion = file_as_string("VERSION").splitlines()
+        daliugeVersion = gitDaliugeVersion[0]
+        commitHash = gitDaliugeVersion[1]
         license = file_as_string("LICENSE")
 
         part_info = " - ".join(

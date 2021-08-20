@@ -248,9 +248,9 @@ class ManagerRestServer(RestServer):
         tpl = file_as_string('web/session.html')
         urlparts = bottle.request.urlparts
         serverUrl = urlparts.scheme + '://' + urlparts.netloc
-        Version = file_as_string("web/VERSION").splitlines()
-        daliugeVersion = Version[0]
-        commitHash = Version[1]
+        gitDaliugeVersion = file_as_string("web/VERSION").splitlines()
+        daliugeVersion = gitDaliugeVersion[0]
+        commitHash = gitDaliugeVersion[1]
         license = file_as_string("web/LICENSE")
         return bottle.template(tpl,
                                sessionId=sessionId,
@@ -260,7 +260,8 @@ class ManagerRestServer(RestServer):
                                dmType=self.dm.__class__.__name__,
                                daliugeVersion=daliugeVersion,
                                commitHash=commitHash,
-                               license = license),
+                               daliugeLicense = license
+                            )
 
 class NMRestServer(ManagerRestServer):
     """
@@ -324,10 +325,17 @@ class NMRestServer(ManagerRestServer):
         tpl = file_as_string('web/dm.html')
         urlparts = bottle.request.urlparts
         serverUrl = urlparts.scheme + '://' + urlparts.netloc
+        gitDaliugeVersion = file_as_string("web/VERSION").splitlines()
+        daliugeVersion = gitDaliugeVersion[0]
+        commitHash = gitDaliugeVersion[1]
+        license = file_as_string("web/LICENSE")
         return bottle.template(tpl,
                                serverUrl=serverUrl,
                                dmType=self.dm.__class__.__name__,
-                               reset='false')
+                               reset='false',
+                               daliugeVersion=daliugeVersion,
+                               commitHash=commitHash,
+                               daliugeLicense = license)
 
 class CompositeManagerRestServer(ManagerRestServer):
     """
@@ -452,13 +460,20 @@ class CompositeManagerRestServer(ManagerRestServer):
         urlparts = bottle.request.urlparts
         selectedNode = bottle.request.params['node'] if 'node' in bottle.request.params else ''
         serverUrl = urlparts.scheme + '://' + urlparts.netloc
+        gitDaliugeVersion = file_as_string("web/VERSION").splitlines()
+        daliugeVersion = gitDaliugeVersion[0]
+        commitHash = gitDaliugeVersion[1]
+        license = file_as_string("web/LICENSE")
         return bottle.template(tpl,
                         dmType=self.dm.__class__.__name__,
                         dmPort=self.dm.dmPort,
                         serverUrl=serverUrl,
                         dmHosts=json.dumps(self.dm.dmHosts),
                         nodes=json.dumps(self.dm.nodes),
-                        selectedNode=selectedNode)
+                        selectedNode=selectedNode,
+                        daliugeVersion=daliugeVersion,
+                        commitHash=commitHash,
+                        daliugeLicense = license)
 
 class MasterManagerRestServer(CompositeManagerRestServer):
 
