@@ -248,12 +248,19 @@ class ManagerRestServer(RestServer):
         tpl = file_as_string('web/session.html')
         urlparts = bottle.request.urlparts
         serverUrl = urlparts.scheme + '://' + urlparts.netloc
+        Version = file_as_string("web/VERSION").splitlines()
+        daliugeVersion = Version[0]
+        commitHash = Version[1]
+        license = file_as_string("web/LICENSE")
         return bottle.template(tpl,
                                sessionId=sessionId,
                                selectedNode=selectedNode,
                                viewMode=viewMode,
                                serverUrl=serverUrl,
-                               dmType=self.dm.__class__.__name__)
+                               dmType=self.dm.__class__.__name__,
+                               daliugeVersion=daliugeVersion,
+                               commitHash=commitHash,
+                               license = license),
 
 class NMRestServer(ManagerRestServer):
     """

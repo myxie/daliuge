@@ -47,6 +47,16 @@
 				</div>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
+				<li class="nav-item dropdown" data-intro='Additional usage information and introductions to EAGLE features.'>
+					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownHelp" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						Help
+					</a>
+					<div class="nav-item dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownHelp">
+						<a class="dropdown-item" id="about" href="#" onclick=showAbout()>About</a>
+						<a class="dropdown-item" id="onlineHelp" href="#" onclick=openDocs()>Online Help</a>
+						<a class="dropdown-item" id="submitIssue" href="#" onclick=submitIssue()>Submit Issue</a>
+					</div>
+				</li>
 				<button id="cancelBtn" type="button" class="btn btn-secondary">Cancel Session</button>
 				<button disabled class="btn btn-secondary" id="session-status-wrapper" >Status: <span id="session-status"></span></button>
 			</ul>
@@ -85,6 +95,30 @@
 	<div class="progress" id="pg-progress-bar">
 		<svg></svg>
 	</div>
+
+<!-- About Modal -->
+<div class="modal fade" id="aboutModal" tabindex="-1" role="dialog" aria-labelledby="aboutModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <img src="/static/assets/img/favicon.png" class="rounded float-left" alt="EAGLE logo">
+                <span>&nbsp;&nbsp;</span>
+                <h5 class="modal-title" id="aboutModalTitle">About EAGLE</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h5>Editor for the Advanced Graph Language Environment</h5>
+                <span>Version:&nbsp;{{version}}&nbsp;({{commit_hash}})</span>
+                <hr />
+                <pre>{% include 'license.html' %}</pre>
+                <hr />
+                <pre>{% include 'versions.html' %}</pre>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script>
 
