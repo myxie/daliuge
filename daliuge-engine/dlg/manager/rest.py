@@ -252,6 +252,7 @@ class ManagerRestServer(RestServer):
         daliugeVersion = gitDaliugeVersion[0]
         commitHash = gitDaliugeVersion[1]
         license = file_as_string("web/LICENSE")
+        daliugeAbout = file_as_string("web/ABOUT.html")
         return bottle.template(tpl,
                                sessionId=sessionId,
                                selectedNode=selectedNode,
@@ -260,7 +261,8 @@ class ManagerRestServer(RestServer):
                                dmType=self.dm.__class__.__name__,
                                daliugeVersion=daliugeVersion,
                                commitHash=commitHash,
-                               daliugeLicense = license
+                               daliugeLicense = license,
+                               daliugeAbout = daliugeAbout,
                             )
 
 class NMRestServer(ManagerRestServer):
@@ -329,13 +331,16 @@ class NMRestServer(ManagerRestServer):
         daliugeVersion = gitDaliugeVersion[0]
         commitHash = gitDaliugeVersion[1]
         license = file_as_string("web/LICENSE")
+        daliugeAbout = file_as_string("web/ABOUT.html")
         return bottle.template(tpl,
                                serverUrl=serverUrl,
                                dmType=self.dm.__class__.__name__,
                                reset='false',
                                daliugeVersion=daliugeVersion,
                                commitHash=commitHash,
-                               daliugeLicense = license)
+                               daliugeLicense = license,
+                               daliugeAbout = daliugeAbout,
+                               )
 
 class CompositeManagerRestServer(ManagerRestServer):
     """
@@ -464,6 +469,7 @@ class CompositeManagerRestServer(ManagerRestServer):
         daliugeVersion = gitDaliugeVersion[0]
         commitHash = gitDaliugeVersion[1]
         license = file_as_string("web/LICENSE")
+        daliugeAbout = file_as_string("web/ABOUT.html")
         return bottle.template(tpl,
                         dmType=self.dm.__class__.__name__,
                         dmPort=self.dm.dmPort,
@@ -473,7 +479,9 @@ class CompositeManagerRestServer(ManagerRestServer):
                         selectedNode=selectedNode,
                         daliugeVersion=daliugeVersion,
                         commitHash=commitHash,
-                        daliugeLicense = license)
+                        daliugeAbout = daliugeAbout,
+                        daliugeLicense = license,
+                        )
 
 class MasterManagerRestServer(CompositeManagerRestServer):
 

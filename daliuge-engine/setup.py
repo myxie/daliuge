@@ -112,6 +112,11 @@ class lib64_path(install):
             f.write("{0}/dist-packages".format(lp))
         install.copy_file(self, PTH_FILE, os.path.join(self.install_lib, PTH_FILE))
 
+class installReadme(install):
+    def run(self):
+        install.copy_file(self, 'ABOUT.html', 'dlg/manager/web/ABOUT.html')
+        install.run(self)
+
 # Core requirements of DALiuGE
 # Keep alpha-sorted PLEASE!
 install_requires = [
@@ -156,13 +161,15 @@ setup(
     name="daliuge-engine",
     version=get_version_info()[0],
     description=u"Data Activated \uF9CA (flow) Graph Engine - Runtime",
-    long_description="The SKA-SDK prototype for the Execution Framework component",
+    long_description="The DALiuGE Execution engine component",
     author="ICRAR DIA Group",
     author_email="dfms_prototype@googlegroups.com",
     url="https://github.com/ICRAR/daliuge",
     license="LGPLv2+",
+    include_package_data=True,
     packages=find_packages(exclude=("test", "test.*", "fabfile")),
     package_data={
+        "": ["ABOUT.html"],
         "dlg.apps": ["dlg_app.h", "dlg_app2.h"],
         "dlg.manager": [
             "web/*.html",
@@ -191,5 +198,7 @@ setup(
     install_requires=install_requires,
     extras_require=extra_requires,
     test_suite="test",
-    cmdclass={"install": lib64_path},
+    cmdclass={"install": lib64_path,
+        "installReadme": installReadme,
+    },
 )

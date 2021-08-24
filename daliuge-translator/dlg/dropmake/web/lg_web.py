@@ -368,6 +368,7 @@ def gen_pgt():
 
         gitDaliugeVersion = file_as_string("VERSION").splitlines()
         daliugeVersion = gitDaliugeVersion[0]
+        daliugeAbout = file_as_string("ABOUT.html")
         commitHash = gitDaliugeVersion[1]
         license = file_as_string("LICENSE")
 
@@ -384,6 +385,7 @@ def gen_pgt():
             daliugeVersion=daliugeVersion,
             commitHash=commitHash,
             license = license,
+            daliugeAbout = daliugeAbout,
         )
     except GraphException as ge:
         response.status = 500
@@ -421,6 +423,7 @@ def gen_pgt_post():
 
         gitDaliugeVersion = file_as_string("VERSION").splitlines()
         daliugeVersion = gitDaliugeVersion[0]
+        daliugeAbout = file_as_string("ABOUT.html")
         commitHash = gitDaliugeVersion[1]
         license = file_as_string("LICENSE")
 
@@ -436,6 +439,7 @@ def gen_pgt_post():
             daliugeVersion=daliugeVersion,
             commitHash=commitHash,
             license = license,
+            daliugeAbout = daliugeAbout,
         )
     except GraphException as ge:
         trace_msg = traceback.format_exc()
