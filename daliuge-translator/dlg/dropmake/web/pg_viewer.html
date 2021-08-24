@@ -186,5 +186,17 @@
     
     <!-- init script includes require, this links main js and echarts -->
     <script src="/static/graph_init.js"></script>
+    <script>
+        function submitIssue(){
+		// automatically add the EAGLE version and commit hash to the body of the new issue
+		var bodyText = "\n\nVersion: "+"{{daliugeVersion}}"+"\nCommit Hash: "+"{{commitHash}}";
+
+		// url encode the body text
+		bodyText = encodeURI(bodyText);
+
+		// open in new tab
+		window.open("https://github.com/ICRAR/EAGLE/issues/new?body="+bodyText, "_blank");
+	}
+    </script>
 </body>
 </html>

@@ -91,18 +91,6 @@ function fillOutSettings(){
     $("#aboutModal").modal('show');
   }
 
-  function submitIssue(){
-    console.log("submitIssue")
-     // automatically add the EAGLE version and commit hash to the body of the new issue
-     var bodyText = "\n\nVersion: "+(window).version+"\nCommit Hash: "+(window).commit_hash;
-
-     // url encode the body text
-     bodyText = encodeURI(bodyText);
-
-     // open in new tab
-     window.open("https://github.com/ICRAR/EAGLE/issues/new?body="+bodyText, "_blank");
-  }
-
   function openDocs() {
      // open in new tab:
      window.open(
