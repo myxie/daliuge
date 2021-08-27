@@ -152,10 +152,14 @@ async function restDeploy(){
     $('#settingsModal').on('hidden.bs.modal', function () {
       fillOutSettings()
       murl = window.localStorage.getItem("manager_url");
-    })};
+    });
+    // the URL is not known, so we must abort the deployment
+    // since we displayed the settingsModal, hopefully the user will fill that out and attempt to deploy again
+    return;
+  }
   var manager_url = new URL(murl);
-  console.log("Already here")
-  
+  console.log("Already here");
+
   const manager_host   = manager_url.hostname;
   const manager_port   = manager_url.port;
   var manager_prefix = manager_url.pathname;
@@ -192,7 +196,7 @@ async function restDeploy(){
   console.log("sending request to ", node_list_url);
   const node_list = await fetch(node_list_url, {
     method: 'GET',
-    credentials: 'include', 
+    credentials: 'include',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
     }
@@ -256,7 +260,7 @@ async function restDeploy(){
 
   // append graph to session on engine
   const append_graph = await fetch(append_graph_url, {
-    credentials: 'include', 
+    credentials: 'include',
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -275,7 +279,7 @@ async function restDeploy(){
   // deploy graph
   // NOTE: URLSearchParams here turns the object into a x-www-form-urlencoded form
   const deploy_graph = await fetch(deploy_graph_url, {
-    credentials: 'include', 
+    credentials: 'include',
     method: 'POST',
     body: new URLSearchParams({
       'completed': pg_spec_response.root_uids,
