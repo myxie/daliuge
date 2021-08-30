@@ -44,7 +44,7 @@ import uuid
 
 from . import dfms_proxy, remotes
 from .. import common
-from ... import utils, tool
+from ... import utils
 from ...dropmake import pg_generator
 from ...manager import cmdline
 from ...manager.client import NodeManagerClient
@@ -140,7 +140,7 @@ def start_dim(node_list, log_dir, origin_ip, logv=1):
     lv = 'v' * logv
     args = ['-l', log_dir, '-%s' % lv, '-N', ','.join(node_list),
             '-H', '0.0.0.0', '-m', '2048']
-    proc = tool.start_process('dim', args)
+    proc = common.tool.start_process('dim', args)
     logger.info('Island manager process started with pid %d', proc.pid)
     return proc
 
@@ -224,7 +224,7 @@ def get_pg(opts, nms, dims):
     num_dims = len(dims)
     if opts.logical_graph:
         unrolled = pg_generator.unroll(opts.logical_graph, opts.ssid, opts.zerorun, apps[opts.app])
-        algo_params = tool.parse_partition_algo_params(opts.algo_params)
+        algo_params = common.tool.parse_partition_algo_params(opts.algo_params)
         pgt = pg_generator.partition(unrolled, opts.part_algo,
                                      num_partitions=num_nms,
                                      num_islands=num_dims,

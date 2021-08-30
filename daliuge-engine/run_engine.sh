@@ -24,8 +24,8 @@ case "$1" in
         mkdir -p ${DLG_ROOT}/workspace
         mkdir -p ${DLG_ROOT}/testdata
         mkdir -p ${DLG_ROOT}/code
-        DOCKER_OPTS+="-v ${PWD}/dlg/manager:/root/dlg/lib/python3.8/site-packages/dlg/manager"
-        DOCKER_OPTS+=" -v ${DLG_ROOT}:${DLG_ROOT} --env DLG_ROOT=${DLG_ROOT}"
+        DOCKER_OPTS="${DOCKER_OPTS} -v ${PWD}/dlg/manager:/root/dlg/lib/python3.8/site-packages/dlg/manager"
+        DOCKER_OPTS="${DOCKER_OPTS} -v ${DLG_ROOT}:${DLG_ROOT} --env DLG_ROOT=${DLG_ROOT}"
         echo "docker run -td ${DOCKER_OPTS}  icrar/daliuge-engine:${VCS_TAG}"
         docker run -td ${DOCKER_OPTS}  icrar/daliuge-engine:${VCS_TAG}
 #        docker run -td ${DOCKER_OPTS} icrar/dlg-engine:casa
