@@ -1206,6 +1206,8 @@ class NgasDROP(AbstractDROP):
         if self.len == -1:
             # TODO: For writing the len field should be set to the size of the input drop
             self.len = self._size
+        else:
+            self._size = self.len
         if self.ngasFileId:
             self.fileId = self.ngasFileId
         else:
@@ -1238,25 +1240,26 @@ class NgasDROP(AbstractDROP):
             raise Exception("%r not in INITIALIZED or WRITING state (%s), cannot setComplete()" % (self, self.status))
         
         self._closeWriters()
-        # here we set the size. It could happen that nothing is written into
-        # this file, in which case we create an empty file so applications
-        # downstream don't fail to read
-        logger.debug("Trying to set size of NGASDrop")
-        try:
-            stat = self.getIO().fileStatus()
-            logger.debug("Setting size of NGASDrop %s to %s" % (self.fileId, stat['FileSize']))
-            self._size = int(stat['FileSize'])
-        except:
-            # we''ll try this again in case there is some other issue
-            # try:
-            #     with open(self.path, 'wb'):
-            #         pass
-            # except:
-            #     self.status = DROPStates.ERROR
-            #     logger.error("Path not accessible: %s" % self.path)
-            raise
-            logger.debug("Setting size of NGASDrop to %s", 0)
-            self._size = 0
+        if self._size <= 0:
+            # here we set the size. It could happen that nothing is written into
+            # this file, in which case we create an empty file so applications
+            # downstream don't fail to read
+            logger.debug("Trying to set size of NGASDrop")
+            try:
+                stat = self.getIO().fileStatus()
+                logger.debug("Setting size of NGASDrop %s to %s" % (self.fileId, stat['FileSize']))
+                self._size = int(stat['FileSize'])
+            except:
+                # we''ll try this again in case there is some other issue
+                # try:
+                #     with open(self.path, 'wb'):
+                #         pass
+                # except:
+                #     self.status = DROPStates.ERROR
+                #     logger.error("Path not accessible: %s" % self.path)
+                raise
+                logger.debug("Setting size of NGASDrop to %s", 0)
+                self._size = 0
         # Signal our subscribers that the show is over
         logger.debug("Moving %r to COMPLETED", self)
         self.status = DROPStates.COMPLETED
