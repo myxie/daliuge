@@ -417,7 +417,10 @@ class NgasLiteIO(DataIO):
             response = self._desc
             response.close()
 
-    def _writeLoop(self, count=16384):
+    def _writeLoop(self, count=65536):
+        """
+        Write in chunks of count bytes, else the transfer hangs.
+        """
         size = len(self._buf)
         written = 0
         for k in range(ceil(size/count)):

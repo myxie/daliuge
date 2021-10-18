@@ -1237,7 +1237,7 @@ class NgasDROP(AbstractDROP):
         elif status not in [DROPStates.INITIALIZED, DROPStates.WRITING]:
             raise Exception("%r not in INITIALIZED or WRITING state (%s), cannot setComplete()" % (self, self.status))
         
-        self.getIO().finishArchive()
+        self._closeWriters()
         # here we set the size. It could happen that nothing is written into
         # this file, in which case we create an empty file so applications
         # downstream don't fail to read
@@ -1258,7 +1258,6 @@ class NgasDROP(AbstractDROP):
             logger.debug("Setting size of NGASDrop to %s", 0)
             self._size = 0
         # Signal our subscribers that the show is over
-        self._closeWriters()
         logger.debug("Moving %r to COMPLETED", self)
         self.status = DROPStates.COMPLETED
         self._fire('dropCompleted', status=DROPStates.COMPLETED)
