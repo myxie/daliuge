@@ -83,13 +83,14 @@ def beginArchive(host, fileId, port=7777, timeout=5, length=-1, mimeType='applic
         logger.warning("Data size for %s unkown. Caching it first" % (fileId))
     return conn
 
-def finishArchive(conn, fileId):
+def finishArchive(conn):
     """
     Checks that an archiving started by `beginArchive` went on successfully.
     """
+    logger.debug("Checking response for ARCHIVE request to %s:%d" % (conn.host, conn.port))
     response = conn.getresponse()
     if response.status != http.HTTPStatus.OK:
-        raise Exception("Error while QARCHIVE-ing %s to %s:%d: %d %s" % (fileId, conn.host, conn.port, response.status, response.msg))
+        raise Exception("Error while QARCHIVE to %s:%d: %d %s" % (conn.host, conn.port, response.status, response.msg))
 
 def fileStatus(host, port, fileId, timeout=10):
     """

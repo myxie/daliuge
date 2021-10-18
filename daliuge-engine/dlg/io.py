@@ -26,6 +26,7 @@ import os
 import urllib.parse
 
 from typing import Optional
+from math import ceil
 
 from . import ngaslite
 from .apps.plasmaflight import PlasmaFlightClient
@@ -404,16 +405,28 @@ class NgasLiteIO(DataIO):
                 # If length wasn't known up-front we first send Content-Length and then the buffer here.
                 conn.putheader('Content-Length', len(self._buf))
                 conn.endheaders()
-                logger.debug("Sending data for file %s to NGAS" % (self._fileId))
-                conn.send(self._buf)
+                logger.debug("Sending %d bytes for file %s to NGAS" % (len(self._buf), self._fileId))
+                self._writeLoop()
                 self._buf = None
+                logger.debug("Calling finishArchive")
             else:
                 logger.debug("Length is known, assuming data has been sent (%s, %s)" % (self.fileId, self._length))
-            ngaslite.finishArchive(conn, self._fileId)
+            ngaslite.finishArchive(conn)
             conn.close()
         else:
             response = self._desc
             response.close()
+
+    def _writeLoop(self, count=16384):
+        size = len(self._buf)
+        written = 0
+        for k in range(ceil(size/count)):
+            data = self._buf[k*count:min((k+1)*count, size)]
+            self._desc.send(data)
+            written += len(data)
+            logger.debug("Wrote %s of %s bytes" % (written, size))
+        return
+
 
     def _read(self, count=4096, **kwargs):
         return self._desc.read(count)
