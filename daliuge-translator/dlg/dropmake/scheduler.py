@@ -108,9 +108,8 @@ class Schedule(object):
                             found = i
                             break
                     if (found is None):
-                        raise SchedulerException("Cannot find a idle PID, max_dop provided: {0}, actual max_dop: {1}\n Graph: {2}".format(M,
-                        'DAGUtil.get_max_dop(G)', G.nodes(data=True)))
-                        #DAGUtil.get_max_dop(G), G.nodes(data=True)))
+                        raise SchedulerException("Cannot find an idle PID, max_dop provided: {0}, actual max_dop: {1}\n Graph: {2}".format(M,
+                        DAGUtil.get_max_dop(G), G.nodes(data=True)))
                     curr_pid = found
                 ma[curr_pid, stt:edt] = n
                 pr[curr_pid] = edt

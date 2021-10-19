@@ -100,7 +100,7 @@ class TestPyFuncApp(unittest.TestCase):
         b.addInput(a)
         b.addOutput(c)
 
-        with DROPWaiterCtx(self, c, 5):
+        with DROPWaiterCtx(self, c, 10):
             a.write(pickle.dumps(input_data))  # @UndefinedVariable
             a.setCompleted()
 
