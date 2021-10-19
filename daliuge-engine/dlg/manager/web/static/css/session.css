@@ -460,6 +460,10 @@ svg {
   transition-delay: 1s;
 } 
 
+.spin90{
+  transform: rotate(90deg);
+}
+
 #graphName li{
   list-style-type: none;
   display: inline-block;
@@ -498,4 +502,13 @@ svg {
   right:0px; 
   left:0px;
   padding-right:20px;
+}
+
+.iconPlusBtn span{
+  position: absolute;
+  margin-left: -25px;
+}
+
+.iconPlusBtn{
+  padding-left:30px;
 }

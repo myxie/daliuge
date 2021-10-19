@@ -12,9 +12,7 @@
 	<link href="/static/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 	<link  href="/static/css/dm.css" rel="stylesheet" type="text/css"/>
 	<link  href="/static/css/progressBar.css" rel="stylesheet" type="text/css"/>
-	<style>
-		@import "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.css";
-	</style>
+	<link rel="stylesheet" href="static/css/fonts.css">
 </head>
 
 <body>
@@ -57,8 +55,8 @@
 				<tbody>
 				</tbody>
 			</table>
-			<button id="addSessionBtn"  type="button" class="btn btn-secondary"><span class="fa fa-plus"></span> Add Session</button>
-			<button id="refreshSessionListBtn" type="button" class="btn btn-secondary"><span class="fa fa-refresh"></span> Refresh</button>
+			<button id="addSessionBtn"  type="button" class="btn btn-secondary iconPlusBtn"><span class="material-icons">add</span> Add Session</button>
+			<button id="refreshSessionListBtn" type="button" class="btn btn-secondary iconPlusBtn"><span class="material-icons">refresh</span> Refresh</button>
 		</div>
 
 		<div id="nodes">
@@ -72,7 +70,7 @@
 					</thead>
 					<tbody></tbody>
 				</table>
-			<button id="refreshNodeListBtn" type="button" class="btn btn-secondary"><span class="fa fa-refresh"></span> Refresh</button>
+			<button id="refreshNodeListBtn" type="button" class="btn btn-secondary iconPlusBtn"><span class="material-icons">refresh</span> Refresh</button>
 		</div>
 	</div>
 
@@ -117,7 +115,7 @@
 			.append('a').attr("href", nodeHref).text(String);
 		newRow.append('td').classed('details', true)
 			.append('a').attr('href', href_function)
-			.append('span').classed('fa fa-share', true);
+			.append('span').classed('material-icons', true).html("launch");
 	}
 	if( !selectedNode ) {
 		fillTable('#nodesTable tbody', nodes, function(n) { return '?node=' + n; }, function(n){return "http://"+n+":8000"+"?dim_url="+serverUrl});

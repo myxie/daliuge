@@ -311,7 +311,7 @@ function fillDmTable(sessions, tbodyEl, sessionLink, DimSessionLink, cancelBtnSe
 	statusCells = rows.selectAll('td.details').data(function values(s) { return [s.sessionId]; });
 	statusCells.enter().append('td').classed('details', true)
 		.append('a').attr('href', DimSessionLink)
-		.append('span').classed('fa fa-share', true)
+		.append('span').classed('material-icons', true).html("launch")
 	statusCells.select('a').attr('href', DimSessionLink)
 	statusCells.exit().remove()
 
@@ -320,11 +320,11 @@ function fillDmTable(sessions, tbodyEl, sessionLink, DimSessionLink, cancelBtnSe
 	// .html('<button id="'+cancelBtnSessionId+'"class="btn btn-secondary" type="button" onclick="cancel_session(serverUrl,"false",this.id)">cancel</button>')
 	// .html('<button id="'+deleteBtnSessionId+'"class="btn btn-secondary" type="button" onclick="cancel_session(serverUrl,"false",this.id)">delete</button>')
 		.append("button").attr('id', cancelBtnSessionId)
-		.attr("type", 'button').attr('class', 'btn btn-secondary cancelSession fa fa-ban').attr('onclick', '(cancel_session(serverUrl,"false",this.id))')
+		.attr("type", 'button').attr('class', 'btn btn-secondary cancelSession material-icons').html('do_not_disturb').attr('onclick', '(cancel_session(serverUrl,"false",this.id))')
 		.attr( 'data-bs-toggle','tooltip').attr('data-bs-placement','bottom').attr('title','cancel ongoing session')
 		.select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
 		.attr('id', deleteBtnSessionId)
-		.attr("type", 'button').attr('class', 'btn btn-secondary deleteSession fa fa-trash').attr('onclick', '(delete_session(serverUrl,"false",this.id))')
+		.attr("type", 'button').attr('class', 'btn btn-secondary deleteSession material-icons').html('delete').attr('onclick', '(delete_session(serverUrl,"false",this.id))')
 		.attr( 'data-bs-toggle','tooltip').attr('data-bs-placement','bottom').attr('title','Delete session')
 		//log button ready for linking
 		// .select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
