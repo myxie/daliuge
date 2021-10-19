@@ -101,7 +101,9 @@
                             </span>
                             <span id="exportJsonBtn" class="dropdown-item dropDropDownParent" href="#">Load <img id="exportJsonIcon" src="/static/src/icons/arrow_right_white_24dp.svg" alt="">
                                 <div class="dropDropDown">
-                                    <a id="json_button" class="dropdown-item" onclick="physicalGraphTemplateToUploadHelper()">Physical Graph Template</a>
+                                    <a class="dropdown-item" onclick="LogicalGraphToUploadHelper()">Logical Graph</a>
+                                    <a class="dropdown-item" onclick="physicalGraphTemplateToUploadHelper()">Physical Graph Template</a>
+                                    <a class="dropdown-item" onclick="physicalGraphToUploadHelper()">Physical Graph</a>
                                 </div>
                             </span>
                             <div class="dropdown-divider"></div>
@@ -120,7 +122,9 @@
     <div id="main"></div>
     <div id="SVGArea"></div>
     <div style="display:none;">
+        <input id="LogicalGraphToUpload" type="file" name="file">
         <input id="physicalGraphTemplateToUpload" type="file" name="file">
+        <input id="physicalGraphToUpload" type="file" name="file">
     </div>
     <div id="runinfoWrapper">
         <span id="runinfo" >{{partition_info}}</span>

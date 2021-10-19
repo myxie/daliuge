@@ -81,14 +81,38 @@ function makeJSON() {
     });
 }
 
- function physicalGraphTemplateToUploadHelper () {
-   $("#physicalGraphTemplateToUpload").click()
+ function LogicalGraphToUploadHelper () {
+   $("#LogicalGraphToUpload").click()
  }
+
+ function physicalGraphTemplateToUploadHelper () {
+  $("#physicalGraphTemplateToUpload").click()
+}
+
+function physicalGraphToUploadHelper () {
+  $("#physicalGraphToUpload").click()
+}
+
+$("#LogicalGraphToUpload").change(function() {
+  var props=$('#LogicalGraphToUpload').prop('files'),
+  file=props[0]
+  console.log('A LogicalGraphToUpload file has been selected')
+  console.log(file.name)
+  console.log(file.size)
+})
 
 $("#physicalGraphTemplateToUpload").change(function() {
   var props=$('#physicalGraphTemplateToUpload').prop('files'),
   file=props[0]
-  console.log('A file has been selected')
+  console.log('A physicalGraphTemplateToUpload file has been selected')
+  console.log(file.name)
+  console.log(file.size)
+})
+
+$("#physicalGraphToUpload").change(function() {
+  var props=$('#physicalGraphToUpload').prop('files'),
+  file=props[0]
+  console.log('A physicalGraphToUpload file has been selected')
   console.log(file.name)
   console.log(file.size)
 })
