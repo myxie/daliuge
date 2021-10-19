@@ -81,6 +81,18 @@ function makeJSON() {
     });
 }
 
+ function physicalGraphTemplateToUploadHelper () {
+   $("#physicalGraphTemplateToUpload").click()
+ }
+
+$("#physicalGraphTemplateToUpload").change(function() {
+  var props=$('#physicalGraphTemplateToUpload').prop('files'),
+  file=props[0]
+  console.log('A file has been selected')
+  console.log(file.name)
+  console.log(file.size)
+})
+
 function makePNG() {
 
   html2canvas(document.querySelector("#main")).then(canvas => {

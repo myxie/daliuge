@@ -389,6 +389,7 @@
 
 .dropdown-item{
     color: white;
+    position: relative;
 }
 
 .dropdown-item:hover{
@@ -438,6 +439,10 @@
 
 #navbarExportDropdown{
     color:white;
+}
+
+#navbarDeployDropdown{
+  color: white;
 }
 
 #deploy_button, #rest_deploy_button{
