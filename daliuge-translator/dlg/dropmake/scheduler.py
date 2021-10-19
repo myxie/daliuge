@@ -89,6 +89,8 @@ class Schedule(object):
             last_pid = -1
             prev_n = None
 
+            # logger.info("INFO: max_dop provided: {0}, actual max_dop: {1}\n Graph: {2}".format(M,
+            #             DAGUtil.get_max_dop(G), G.nodes(data=True)))
             topo_sort = nx.topological_sort(G)
             for n in topo_sort:
                 node = G.node[n]
@@ -163,7 +165,7 @@ class Partition(object):
         self._child_parts = None
         self._tmp_merge_dag = None
         self._tmp_new_ac = None
-        logger.debug("My dop = %r", self._ask_max_dop)
+        # logger.debug("My dop = %r", self._ask_max_dop)
 
     @property
     def parent_id(self):

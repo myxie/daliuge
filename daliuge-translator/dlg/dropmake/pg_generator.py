@@ -1853,10 +1853,13 @@ class LG:
                 raise GraphException("Logical graph {0} not found".format(f))
             with open(f) as f:
                 lg = json.load(f)
+            logger.info("Loaded LG from %s" %f.name)
         elif hasattr(f, "read"):
             lg = json.load(f)
+            logger.info("Loaded LG from file-like object %s" % f)
         else:
             lg = f
+            logger.info("Loaded LG from from string")
         if ssid is None:
             ts = time.time()
             ssid = datetime.datetime.fromtimestamp(ts).strftime("%Y-%m-%dT%H:%M:%S")

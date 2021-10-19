@@ -118,7 +118,10 @@ class TestPGGen(unittest.TestCase):
             pgtp.json
 
     def test_mysarkar_pgtp_gen_pg(self):
-        lgnames = ['testLoop.graph', 'cont_img.graph', 'test_grpby_gather.graph', 'chiles_simple.graph']
+        lgnames = ['testLoop.graph', 
+                #    'cont_img.graph', 
+                   'test_grpby_gather.graph', 
+                   'chiles_simple.graph']
         tgt_partnum = [15, 15, 10, 10, 5]
         node_list = ['10.128.0.11', '10.128.0.12', '10.128.0.13']
         for i, lgn in enumerate(lgnames):
@@ -131,8 +134,10 @@ class TestPGGen(unittest.TestCase):
             pg_spec = pgtp.to_pg_spec(node_list)
 
     def test_mysarkar_pgtp_gen_pg_island(self):
-        lgnames = ['testLoop.graph', 'cont_img.graph',
-                   'test_grpby_gather.graph', 'chiles_simple.graph']
+        lgnames = ['testLoop.graph', 
+                   'cont_img.graph',
+                   'test_grpby_gather.graph', 
+                   'chiles_simple.graph']
         node_list = ['10.128.0.11', '10.128.0.12',
                      '10.128.0.13', '10.128.0.14',
                      '10.128.0.15', '10.128.0.16']
