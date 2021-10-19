@@ -1240,7 +1240,7 @@ class NgasDROP(AbstractDROP):
             raise Exception("%r not in INITIALIZED or WRITING state (%s), cannot setComplete()" % (self, self.status))
         
         self._closeWriters()
-        if self._size <= 0:
+        if self._size is None or self._size <= 0:
             # here we set the size. It could happen that nothing is written into
             # this file, in which case we create an empty file so applications
             # downstream don't fail to read
