@@ -153,30 +153,6 @@ void drop_completed(dlg_app_info *app, const char *uid, drop_status status)
 	free(app->data);
 }
 
-int find_input_port(dlg_app_info *app, const char *target){
-// Tries to search this component's ports for a given name. Returns -1 if cannot be found.
-    int out = -1;
-    for(size_t i = 0; i < app->n_inputs; ++i){
-        if (strcmp(target, app->inputs[i].name) == 0){
-            out = i;
-            break;
-        }
-    }
-    return out;
-}
-
-int find_output_port(dlg_app_info *app, const char *target){
-// Tries to search this component's ports for a given name. Returns -1 if cannot be found.
-    int out = -1;
-    for(size_t i = 0; i < app->n_outputs; ++i){
-        if (strcmp(target, app->outputs[i].name) == 0){
-            out = i;
-            break;
-        }
-    }
-    return out;
-}
-
 int run(dlg_app_info *app)
 {
 	char *buf;

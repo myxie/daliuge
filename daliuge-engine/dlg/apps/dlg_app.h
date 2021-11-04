@@ -155,6 +155,44 @@ void data_written(dlg_app_info *app, const char *uid, const char *data, size_t n
  */
 void drop_completed(dlg_app_info *app, const char *uid, drop_status status);
 
+
+/**
+ * Iterates through this component's input ports for a given name
+ * This method is provided as a convenient way to safely access a named port.
+ * @param app The application instance
+ * @param target The name of the requested input port (case-sensitive)
+ * @return The index of the required port if found, -1 otherwise.
+ */
+int find_input_port(dlg_app_info *app, const char *target){
+    int out = -1;
+    for(size_t i = 0; i < app->n_inputs; ++i){
+        if (strcmp(target, app->inputs[i].name) == 0){
+            out = i;
+            break;
+        }
+    }
+    return out;
+}
+
+/**
+ * Iterates through this component's output ports for a given name
+ * This method is provided as a convenient way to safely access a named port.
+ * @param app The application instance
+ * @param target The name of the requested output port (case-sensitive)
+ * @return The index of the required port if found, -1 otherwise.
+ */
+int find_output_port(dlg_app_info *app, const char *target){
+// Tries to search this component's ports for a given name. Returns -1 if cannot be found.
+    int out = -1;
+    for(size_t i = 0; i < app->n_outputs; ++i){
+        if (strcmp(target, app->outputs[i].name) == 0){
+            out = i;
+            break;
+        }
+    }
+    return out;
+}
+
 #ifdef __cplusplus
 }
 #endif
